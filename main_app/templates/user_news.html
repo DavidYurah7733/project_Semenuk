@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<a href="{% url 'index' %}">Home</a>
+  <h2>Все работы пользователя</h2>
+  <ul>
+    {% for news in user_news %}
+    <li><a href="{% url 'news_detail' news.id %}">{{ news.title }}</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

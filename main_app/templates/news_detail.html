@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<a href="{% url 'index' %}">На головну</a>
+{% if user.is_authenticated %}
+    {% if news.author == request.user %}
+    <a href="{% url 'edit_news' news.id %}">Редагувати статтю</a>
+    <a href="{% url 'delete_news' news.id %}">Видалити новину</a>
+    {% endif %}
+<a href="{% url 'user_news' news.author.id %}">Дивитись всі статті автора</a>
+{% endif %}
+
+<h1>{{ news.title }}</h1>
+<p>{{ news.content }}</p>
+
+{% if photo %}
+<a href="{{ news.photo.url }}" target="_blank">
+    <img src="{{ news.photo.url }}" alt="Фото" style="max-width: 300px;">
+</a>
+{% endif %}
+
+<h2>Файлы</h2>
+<ul>
+    {% for file in files %}
+    <li><a href="{{ file.file.url }}">{{ file.file.name }}</a></li>
+    {% endfor %}
+</ul>
+
+<h2>Комментарии</h2>
+{% if user.is_authenticated%}
+<a href="{% url 'add_comment' news.id %}">Додати коментар</a>
+{% endif %}
+<ul>
+    {% for comment in comments %}
+    <p>{{ comment.content }}</p>
+    {% if comment.author == request.user %}
+    <form action="{% url 'delete_comment' comment.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Видалити</button>
+    </form>
+    {% endif %}
+    {% endfor %}
+</ul>
+
+{% endblock %}

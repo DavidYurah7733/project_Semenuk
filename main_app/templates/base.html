@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% block title %}<title>Scientific News</title>{% endblock %}
+</head>
+
+<body>
+{% if user.is_authenticated %}
+<li>User: {{ user.get_username }}</li>
+<li><a href="{% url 'logout'%}?next={{request.path}}">Вихiд</a></li>
+{% else %}
+<li><a href="{% url 'login'%}?next={{request.path}}">Вхiд</a></li>
+<li><a href="{% url 'signup'%}?next={{request.path}}">Зареєструватись</a></li>
+{% endif %}
+{% block content %}{% endblock %}
+</body>
+</html>

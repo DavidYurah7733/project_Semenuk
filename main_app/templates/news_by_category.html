@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Новости в категории "{{ category }}"</h1>
+<a href="{% url 'index' %}">Головна</a>
+{% if user.is_authenticated %}
+<a href="{% url 'create_news' %}">Додати новину</a>
+{% endif %}
+    <ul>
+        {% for news_item in news_in_category %}
+            <li><a href="{% url 'news_detail' news_item.id %}">{{ news_item.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

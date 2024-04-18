@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Категорії новин</h1>
+{% if user.is_authenticated %}
+<a href="{% url 'create_news' %}">Додати новину</a>
+{% endif %}
+    <ul>
+        {% if categories %}
+            {% for category in categories %}
+                <li><a href="{% url 'news_by_category' category %}">{{ category }}</a></li>
+            {% endfor %}
+        {% else %}
+        <p>Нема новин</p>
+        {% endif %}
+    </ul>
+{% endblock %}

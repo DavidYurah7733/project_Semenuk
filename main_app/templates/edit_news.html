@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-danger" role="alert">
+    {{ message }}
+</div>
+{% endfor %}
+
+{% endif %}
+  <h2>Редагувати статтю</h2>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <h3>Файли</h3>
+    {{ formset.management_form }}
+    {% for file_form in formset %}
+      {{ file_form.as_p }}
+    {% endfor %}
+    <button type="submit">Зберегти зміни</button>
+  </form>
+{% endblock %}
